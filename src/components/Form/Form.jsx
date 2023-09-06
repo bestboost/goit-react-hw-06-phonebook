@@ -11,7 +11,9 @@ import {
 import { nanoid } from 'nanoid';
 
 const Forms = ({ onSubmit }) => {
+  //global state -> to redux
   const [name, setName] = useState('');
+  //local state
   const [number, setNumber] = useState('');
 
   const handelChange = e => {

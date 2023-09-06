@@ -8,6 +8,7 @@ import useLocalStorage from '../hooks/useLocalStorage';
 // import basicContacts from '../../src/basicContacts';
 
 const App = () => {
+  //global state -> to redux
   const [contacts, setContacts] = useLocalStorage([]);
   const [filters, setFilters] = useState('');
   const normolizedFilter = filters.toLowerCase();
@@ -35,6 +36,7 @@ const App = () => {
       alert(nextName + ' is already in contacts');
       return;
     }
+    //add contact
     setContacts(prevContacts => [contact, ...prevContacts]);
   };
 
