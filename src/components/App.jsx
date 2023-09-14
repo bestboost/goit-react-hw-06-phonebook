@@ -1,24 +1,35 @@
-import React, { useState, useEffect } from 'react';
+// import React, { useState, useEffect } from 'react';
 import { Box } from '../components/Box';
 import { Tiltle, Contacts } from './App.styled';
 import Phonebook from 'components/Phonebook/Phonebook';
 import Forms from 'components/Form/Form';
 import Filter from './Filter/Filter';
-import useLocalStorage from '../hooks/useLocalStorage';
+// import useLocalStorage from '../hooks/useLocalStorage';
 // import basicContacts from '../../src/basicContacts';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  addContact,
+  removeContact,
+  filterContact,
+} from '../redux/contactSlice';
 
 const App = () => {
+  const dispatch = useDispatch();
+  const contacts = useSelector(state => state.userContact.contacts);
+  console.log('App  contacts:', contacts);
+  const filters = useSelector(state => state.userContact.filters);
+  console.log('App  filters:', filters);
   //global state -> to redux
-  const [contacts, setContacts] = useLocalStorage([]);
-  const [filters, setFilters] = useState('');
+  // const [contacts, setContacts] = useLocalStorage([]);
+  // const [filters, setFilters] = useState('');
   const normolizedFilter = filters.toLowerCase();
   const visibleContacts = contacts.filter(contact =>
     contact.name.toLowerCase().includes(normolizedFilter)
   );
 
-  useEffect(() => {
-    window.localStorage.setItem('key', JSON.stringify(contacts));
-  }, [contacts]);
+  // useEffect(() => {
+  //   window.localStorage.setItem('key', JSON.stringify(contacts));
+  // }, [contacts]);
 
   const formSubmitHandler = ({ name, number, id }) => {
     const contact = {
@@ -37,18 +48,13 @@ const App = () => {
       return;
     }
     //add contact
-    setContacts(prevContacts => [contact, ...prevContacts]);
+    dispatch(addContact(name, number, id));
+    // setContacts(prevContacts => [contact, ...prevContacts]);
   };
 
-  const nameFilter = e => {
-    setFilters(e.currentTarget.value);
-  };
+  const nameFilter = e => dispatch(filterContact(e.currentTarget.value));
 
-  const deleteContact = id => {
-    setContacts(prevContacts =>
-      prevContacts.filter(contact => contact.id !== id)
-    );
-  };
+  const deleteContact = id => dispatch(removeContact(id));
 
   return (
     <Box
