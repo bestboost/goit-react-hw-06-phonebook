@@ -1,10 +1,8 @@
-// import React {useEffect } from 'react';
 import { Box } from '../components/Box';
 import { Tiltle, Contacts } from './App.styled';
 import Phonebook from 'components/Phonebook/Phonebook';
 import Forms from 'components/Form/Form';
 import Filter from './Filter/Filter';
-// import useLocalStorage from '../hooks/useLocalStorage';
 // import basicContacts from '../../src/basicContacts';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -22,10 +20,6 @@ const App = () => {
   const visibleContacts = contacts.filter(contact =>
     contact.name.toLowerCase().includes(normolizedFilter)
   );
-
-  // useEffect(() => {
-  //   window.localStorage.setItem('key', JSON.stringify(contacts));
-  // }, [contacts]);
 
   const formSubmitHandler = ({ name, number, id }) => {
     dispatch(addContact(name, number, id));

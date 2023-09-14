@@ -1,8 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { contactSlice } from './contactSlice';
+import { persistedContactsReducer } from './contactSlice';
+import { persistStore } from 'redux-persist';
 
 export const store = configureStore({
   reducer: {
-    userContact: contactSlice.reducer,
+    userContact: persistedContactsReducer,
   },
 });
+
+export const persistor = persistStore(store);
