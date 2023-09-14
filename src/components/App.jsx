@@ -5,6 +5,7 @@ import Forms from 'components/Form/Form';
 import Filter from './Filter/Filter';
 // import basicContacts from '../../src/basicContacts';
 import { useDispatch, useSelector } from 'react-redux';
+import { getContacts, getFilters } from '../redux/selectors';
 import {
   addContact,
   removeContact,
@@ -13,8 +14,8 @@ import {
 
 const App = () => {
   const dispatch = useDispatch();
-  const contacts = useSelector(state => state.userContact.contacts);
-  const filters = useSelector(state => state.userContact.filters);
+  const contacts = useSelector(getContacts);
+  const filters = useSelector(getFilters);
 
   const normolizedFilter = filters.toLowerCase();
   const visibleContacts = contacts.filter(contact =>

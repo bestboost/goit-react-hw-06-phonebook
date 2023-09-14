@@ -9,11 +9,12 @@ import {
   InputPhone,
   AddButton,
 } from './Form.styled';
+import { getContacts } from '../../redux/selectors';
 import { nanoid } from 'nanoid';
 
 const Forms = () => {
   const dispatch = useDispatch();
-  const contacts = useSelector(state => state.userContact.contacts);
+  const contacts = useSelector(getContacts);
 
   const handelChange = e => {
     const { value } = e.currentTarget;
