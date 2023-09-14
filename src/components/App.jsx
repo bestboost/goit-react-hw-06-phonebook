@@ -1,4 +1,4 @@
-// import React, { useState, useEffect } from 'react';
+// import React {useEffect } from 'react';
 import { Box } from '../components/Box';
 import { Tiltle, Contacts } from './App.styled';
 import Phonebook from 'components/Phonebook/Phonebook';
@@ -16,12 +16,8 @@ import {
 const App = () => {
   const dispatch = useDispatch();
   const contacts = useSelector(state => state.userContact.contacts);
-  console.log('App  contacts:', contacts);
   const filters = useSelector(state => state.userContact.filters);
-  console.log('App  filters:', filters);
-  //global state -> to redux
-  // const [contacts, setContacts] = useLocalStorage([]);
-  // const [filters, setFilters] = useState('');
+
   const normolizedFilter = filters.toLowerCase();
   const visibleContacts = contacts.filter(contact =>
     contact.name.toLowerCase().includes(normolizedFilter)
@@ -32,24 +28,7 @@ const App = () => {
   // }, [contacts]);
 
   const formSubmitHandler = ({ name, number, id }) => {
-    const contact = {
-      name,
-      number,
-      id,
-    };
-
-    const nextName = contact.name.toLowerCase();
-    const prevName = contacts.find(
-      contact => contact.name.toLowerCase() === nextName
-    );
-
-    if (prevName) {
-      alert(nextName + ' is already in contacts');
-      return;
-    }
-    //add contact
     dispatch(addContact(name, number, id));
-    // setContacts(prevContacts => [contact, ...prevContacts]);
   };
 
   const nameFilter = e => dispatch(filterContact(e.currentTarget.value));

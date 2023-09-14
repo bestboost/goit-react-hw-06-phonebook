@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-// import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from 'redux/contactSlice';
 import {
@@ -12,18 +11,12 @@ import {
 } from './Form.styled';
 import { nanoid } from 'nanoid';
 
-const Forms = ({ onSubmit }) => {
+const Forms = () => {
   const dispatch = useDispatch();
-  //global state -> to redux
   const contacts = useSelector(state => state.userContact.contacts);
-  console.log('Forms  contacts:', contacts);
-
-  //local state
-  // const number = useSelector(state => state.userContact.contacts);
-  // console.log('Forms  number:', number);
 
   const handelChange = e => {
-    const { contacts, value } = e.currentTarget;
+    const { value } = e.currentTarget;
 
     switch (contacts) {
       case 'name':
@@ -42,19 +35,11 @@ const Forms = ({ onSubmit }) => {
   const handelSubmit = e => {
     e.preventDefault();
     const form = e.currentTarget;
-    // const addContact = form.elements.name.value;
-    // console.log('handelSubmit  form:', addContact);
-    dispatch(addContact(form.elements.name.value, form.elements.number.value));
 
-    // onSubmit(Object.assign({ id: nanoid(), name, number }));
+    dispatch(addContact(form.elements.name.value, form.elements.number.value));
 
     form.reset();
   };
-
-  // const reset = () => {
-  //   setName('');
-  //   setNumber('');
-  // };
 
   const nameId = nanoid();
   const numberId = nanoid();
@@ -66,10 +51,8 @@ const Forms = ({ onSubmit }) => {
         id={nameId}
         type="text"
         name="name"
-        //  pattern="^[a-zA-Za-яА-Я]+(([' -][a-zA-Za-яА-Я ])?[a-zA-Za-яА-Я]*)*$"
         title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
         required
-        // value={value}
         onChange={handelChange}
       />
       <TypePhone htmlFor={numberId}>Number</TypePhone>
@@ -77,10 +60,8 @@ const Forms = ({ onSubmit }) => {
         id={numberId}
         type="tel"
         name="number"
-        //  pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
         title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
         required
-        // value={value}
         onChange={handelChange}
       />
       <AddButton type="submit">Add contact</AddButton>
