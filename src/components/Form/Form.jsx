@@ -38,19 +38,19 @@ const Forms = () => {
 
   const handelSubmit = e => {
     e.preventDefault();
-    const form = e.currentTarget.elements;
+    const form = e.currentTarget;
 
     const alertCondition = contacts.map(contact => contact.name);
     if (
       alertCondition.find(
-        item => item.toLowerCase() === form.name.value.toLowerCase()
+        item => item.toLowerCase() === form.elements.name.value.toLowerCase()
       )
     ) {
-      alert(form.name.value + ' is already in contacts');
+      alert(form.elements.name.value + ' is already in contacts');
       return;
     }
 
-    dispatch(addContact(form.name.value, form.number.value));
+    dispatch(addContact(form.elements.name.value, form.elements.number.value));
     form.reset();
   };
 
