@@ -47,6 +47,7 @@ const Forms = () => {
       )
     ) {
       alert(form.elements.name.value + ' is already in contacts');
+      form.reset();
       return;
     }
 
