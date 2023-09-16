@@ -10,7 +10,6 @@ import {
   AddButton,
 } from './Form.styled';
 import { getContacts } from '../../redux/selectors';
-import { nanoid } from 'nanoid';
 
 const Forms = () => {
   const dispatch = useDispatch();
@@ -28,6 +27,10 @@ const Forms = () => {
         addContact(value);
         break;
 
+      case 'id':
+        addContact(value);
+        break;
+
       default:
         return;
     }
@@ -35,30 +38,38 @@ const Forms = () => {
 
   const handelSubmit = e => {
     e.preventDefault();
-    const form = e.currentTarget;
+    const form = e.currentTarget.elements;
 
-    dispatch(addContact(form.elements.name.value, form.elements.number.value));
+    const alertCondition = contacts.map(contact => contact.name);
+    if (
+      alertCondition.find(
+        item => item.toLowerCase() === form.name.value.toLowerCase()
+      )
+    ) {
+      alert(form.name.value + ' is already in contacts');
+      return;
+    }
 
+    dispatch(addContact(form.name.value, form.number.value));
     form.reset();
   };
 
-  const nameId = nanoid();
-  const numberId = nanoid();
+  const { id } = contacts;
 
   return (
     <Form onSubmit={handelSubmit}>
-      <TypeName htmlFor={nameId}>Name</TypeName>
+      <TypeName htmlFor={id}>Name</TypeName>
       <InputName
-        id={nameId}
+        id={id}
         type="text"
         name="name"
         title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
         required
         onChange={handelChange}
       />
-      <TypePhone htmlFor={numberId}>Number</TypePhone>
+      <TypePhone htmlFor={id}>Number</TypePhone>
       <InputPhone
-        id={numberId}
+        id={id}
         type="tel"
         name="number"
         title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
@@ -72,7 +83,6 @@ const Forms = () => {
 
 Forms.propTypes = {
   contacts: PropTypes.arrayOf(PropTypes.string.isRequired),
-  onSubmit: PropTypes.func.isRequired,
 };
 
 export default Forms;

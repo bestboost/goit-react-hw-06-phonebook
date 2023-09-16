@@ -14,12 +14,6 @@ export const contactSlice = createSlice({
   reducers: {
     addContact: {
       reducer(state, action) {
-        const alertCondition = state.contacts.map(contact => contact.name);
-
-        if (alertCondition.find(item => item === action.payload.name)) {
-          alert(action.payload.name + ' is already in contacts');
-          return;
-        }
         state.contacts.push(action.payload);
       },
       prepare(name, number) {
@@ -47,6 +41,7 @@ export const contactSlice = createSlice({
 const persistConfig = {
   key: 'userContact',
   storage,
+  blacklist: ['filters'],
 };
 
 export const persistedContactsReducer = persistReducer(
